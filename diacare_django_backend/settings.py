@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account',
+    'article',
+    'diabetes_control',
+    'free_diet',
+    'specialized_diet',
 ]
 
 MIDDLEWARE = [
