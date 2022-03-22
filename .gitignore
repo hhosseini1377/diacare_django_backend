@@ -18,6 +18,7 @@ media
 .idea/**/shelf
 .idea/**/diacare_django_backend.iml
 .idea/**/misc.iml
+.idea/**.iml
 # AWS User-specific
 .idea/**/aws.xml
 
