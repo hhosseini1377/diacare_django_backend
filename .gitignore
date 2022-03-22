@@ -16,7 +16,8 @@ media
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
+.idea/**/diacare_django_backend.iml
+.idea/**/misc.iml
 # AWS User-specific
 .idea/**/aws.xml
 
