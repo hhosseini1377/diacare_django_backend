@@ -3,9 +3,6 @@ from django.db import models
 from account.models import Account
 
 
-# Create your models here.
-
-
 class VisitTime(models.Model):
     DIABETES_CONTROL = 'diabetes_control'
     SPECIAL_PROGRAM = 'specialized_program'
@@ -24,27 +21,15 @@ class VisitTime(models.Model):
     type = models.CharField(max_length=100,
                             choices=VISIT_CHOICES, verbose_name='نوع ویزیت')
 
+    def __str__(self):
+        return "دکتر: " + self.doctor.__str__() + " / " + "بیمار: " + self.patient.__str__()
 
-class Diet(models.Model):
-    visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE)
-
-
-class DietTemplate(models.Model):
-    BREAKFAST = 'breakfast'
-    LUNCH = 'lunch'
-    DINNER = 'dinner'
-    DIET_CHOICES = (
-        (BREAKFAST, 'صبحانه'),
-        (LUNCH, 'ناهار'),
-        (DINNER, 'شام')
-    )
-    DIET_KINDS = tuple(dict(DIET_CHOICES).keys())
-
-    context = models.CharField(max_length=100, verbose_name='محتوا')
-    meal = models.CharField(max_length=100, choices=DIET_CHOICES, verbose_name='وعده غذایی')
+    class Meta:
+        verbose_name = 'ویزیت'
+        verbose_name_plural = 'ویزیت‌ها'
 
 
-class DietPart(models.Model):
+class DietTemplatePart(models.Model):
     SATURDAY = 'saturday'
     SUNDAY = 'sunday'
     MONDAY = 'monday'
@@ -61,14 +46,55 @@ class DietPart(models.Model):
         (THURSDAY, 'پنج‌شنبه'),
         (FRIDAY, 'جمعه')
     )
+
+    BREAKFAST = 'breakfast'
+    LUNCH = 'lunch'
+    DINNER = 'dinner'
+    DIET_CHOICES = (
+        (BREAKFAST, 'صبحانه'),
+        (LUNCH, 'ناهار'),
+        (DINNER, 'شام')
+    )
+
+    DIET_KINDS = tuple(dict(DIET_CHOICES).keys())
     WEEKDAY_KINDS = tuple(dict(WEEKDAY_CHOICES).keys())
+    context = models.CharField(max_length=100, verbose_name='محتوا')
+    meal = models.CharField(max_length=100, choices=DIET_CHOICES, verbose_name='وعده غذایی')
     week_day = models.CharField(max_length=100, verbose_name='روز هفته', choices=WEEKDAY_CHOICES)
-    template = models.ForeignKey(to=DietTemplate, on_delete=models.CASCADE, related_name='diet_template',
-                                 verbose_name='تمپلیت رژیم')
-    diet = models.ForeignKey(to=Diet, on_delete=models.CASCADE, related_name='diet_parts', verbose_name='رژیم')
+
+    owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده قطعه رژیم')
 
     def __str__(self):
-        return str(self.diet.id) + " " + str(self.template.meal) + " " + str(self.week_day)
+        return self.week_day + "/" + self.meal + ': ' + self.context[:30]
+
+    class Meta:
+        verbose_name = 'بخش تمپلیت رژیم'
+        verbose_name_plural = 'بخش‌های تمپلیت رژیم'
+
+
+class Template(models.Model):
+    name = models.CharField(max_length=100, verbose_name='نام تمپلیت')
+    owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده تمپلیت رژیم')
+    template_parts = models.ManyToManyField(DietTemplatePart, verbose_name='بخش‌های تمپلیت')
+
+    class Meta:
+        verbose_name = 'تمپلیت رژیم'
+        verbose_name_plural = 'تمپلیت‌های رژیم'
+
+    def __str__(self):
+        return "برنامه رژیم توسط دکتر " + self.owner.__str__() + ":\n " + self.name
+
+
+class Diet(models.Model):
+    visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE)
+    template = models.ForeignKey(Template, on_delete=models.CASCADE, verbose_name='تمپلیت رژیم')
+
+    class Meta:
+        verbose_name = 'رژیم غذایی'
+        verbose_name_plural = "رژیم‌های غذایی"
+
+    def __str__(self):
+        return self.template.__str__() + " / " + self.visit.__str__()
 
 
 class Prescription(models.Model):
@@ -76,4 +102,8 @@ class Prescription(models.Model):
     visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE, verbose_name='ویزیت')
 
     def __str__(self):
-        return str('دکتر:') + str(self.visit.doctor) + "/" + str('بیمار:') + str(self.visit.patient)
+        return str('پزشک:') + str(self.visit.doctor.__str__()) + "/" + str('بیمار:') + str(self.visit.patient.__str__())
+
+    class Meta:
+        verbose_name = 'نسخه'
+        verbose_name_plural = 'نسخه‌ها'

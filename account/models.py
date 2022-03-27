@@ -67,7 +67,10 @@ class Account(AbstractUser, TimeModel):
     objects = AccountUserManager()
 
     def __str__(self):
-        return self.email
+        if self.first_name is None or self.last_name is None:
+            return self.email
+        else:
+            return self.first_name + " " + self.last_name
 
     class Meta:
         verbose_name = 'اکانت'
