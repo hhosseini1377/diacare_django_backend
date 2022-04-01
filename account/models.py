@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 from simple_history.models import HistoricalRecords
+from django.utils.translation import gettext_lazy as _
 
 from _helpers.db import TimeModel
 
@@ -11,6 +12,8 @@ from _helpers.db import TimeModel
 
 class AccountUserManager(BaseUserManager):
     def create_user(self, phone, email, password, **extra_fields):
+        extra_fields.setdefault('is_active', False)
+
         if not phone:
             raise ValueError('The phone must be set')
         if not email:
@@ -57,13 +60,21 @@ class Account(AbstractUser, TimeModel):
         db_index=True
 
     )
+    avatar = models.ImageField(default='default_avatar.png')
     email = models.EmailField(verbose_name="آدرس ایمیل", unique=True, db_index=True)
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = ['email', ]
     role = models.CharField(max_length=100,
                             choices=ROLES_CHOICES,
                             default='patient', verbose_name="نوع کاربر")
-
+    is_active = models.BooleanField(
+        _("active"),
+        default=False,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
     objects = AccountUserManager()
 
     def __str__(self):
