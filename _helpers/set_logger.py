@@ -1,6 +1,5 @@
 from decouple import config
 
-
 def set_logger(logging, name):
     logging.basicConfig(
         format='%(levelname)s %(asctime)s %(message)s',

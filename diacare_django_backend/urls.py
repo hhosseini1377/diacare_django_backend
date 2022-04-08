@@ -16,4 +16,6 @@ urlpatterns = [
                   path('api/v1/account/', include('account.urls')),
                   path('api/v1/article/', include('article.urls')),
                   path('diacare_history/', GetLandingPageInformation.as_view(), name='information_history'),
+                  path('freediet/', include('free_diet.urls'), name='free_diet'),
+                  path('dashboard/', include('dashboard.urls'), name='dashboard')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

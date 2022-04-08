@@ -1,6 +1,7 @@
 from django.db import models
 
 from account.models import Account
+from free_diet.models import FreeDiet
 
 
 class VisitTime(models.Model):
@@ -29,7 +30,7 @@ class VisitTime(models.Model):
         verbose_name_plural = 'ویزیت‌ها'
 
 
-class Diet(models.Model):
+class SpecializedDiet(models.Model):
     name = models.CharField(max_length=50, verbose_name='نام رژیم', blank=True)
     visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE)
 
@@ -74,8 +75,8 @@ class DietTemplatePart(models.Model):
     context = models.CharField(max_length=100, verbose_name='محتوا')
     meal = models.CharField(max_length=100, choices=DIET_CHOICES, verbose_name='وعده غذایی')
     week_day = models.CharField(max_length=100, verbose_name='روز هفته', choices=WEEKDAY_CHOICES)
-    diet = models.ForeignKey(to=Diet, on_delete=models.CASCADE)
-
+    free_diet = models.ForeignKey(to=FreeDiet, on_delete=models.CASCADE, null=True, blank= True)
+    specialized_diet = models.ForeignKey(to=SpecializedDiet, on_delete=models.CASCADE, null=True, blank=True)
     # owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده قطعه رژیم')
 
     def __str__(self):

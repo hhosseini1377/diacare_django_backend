@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'article',
     'diabetes_control',
     'free_diet',
-    'specialized_diet',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
