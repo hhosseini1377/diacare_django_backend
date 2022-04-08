@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import VisitTime, DietTemplatePart, SpecializedDiet, FreeDiet
+from .models import VisitTime, DietTemplatePart, SpecializedDiet
 
 
 class DietAdmin(admin.TabularInline):

@@ -1,7 +1,7 @@
 from django.db import models
 
 from account.models import Account
-
+from free_diet.models import FreeDiet
 
 class VisitTime(models.Model):
     DIABETES_CONTROL = 'diabetes_control'
@@ -40,17 +40,6 @@ class SpecializedDiet(models.Model):
     def __str__(self):
         return "برنامه رژیم توسط دکتر " + self.visit.doctor.last_name.__str__() + " برای بیمار: " + \
                self.visit.patient.__str__()
-
-
-class DietKind(models.Model):
-    name = models.CharField(max_length=50, verbose_name='هدف رژیم', blank=True)
-
-
-class FreeDiet(models.Model):
-
-    name = models.CharField(max_length=50, verbose_name='نام رژیم', blank=True)
-    accounts = models.ManyToManyField(to=Account, related_name='diet_accounts')
-    kind = models.ForeignKey(DietKind, on_delete=models.CASCADE)
 
 
 class DietTemplatePart(models.Model):
