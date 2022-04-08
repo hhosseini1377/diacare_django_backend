@@ -29,7 +29,7 @@ class VisitTime(models.Model):
         verbose_name_plural = 'ویزیت‌ها'
 
 
-class Diet(models.Model):
+class SpecializedDiet(models.Model):
     name = models.CharField(max_length=50, verbose_name='نام رژیم', blank=True)
     visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE)
 
@@ -40,6 +40,17 @@ class Diet(models.Model):
     def __str__(self):
         return "برنامه رژیم توسط دکتر " + self.visit.doctor.last_name.__str__() + " برای بیمار: " + \
                self.visit.patient.__str__()
+
+
+class DietKind(models.Model):
+    name = models.CharField(max_length=50, verbose_name='هدف رژیم', blank=True)
+
+
+class FreeDiet(models.Model):
+
+    name = models.CharField(max_length=50, verbose_name='نام رژیم', blank=True)
+    accounts = models.ManyToManyField(to=Account, related_name='diet_accounts')
+    kind = models.ForeignKey(DietKind, on_delete=models.CASCADE)
 
 
 class DietTemplatePart(models.Model):
@@ -74,8 +85,8 @@ class DietTemplatePart(models.Model):
     context = models.CharField(max_length=100, verbose_name='محتوا')
     meal = models.CharField(max_length=100, choices=DIET_CHOICES, verbose_name='وعده غذایی')
     week_day = models.CharField(max_length=100, verbose_name='روز هفته', choices=WEEKDAY_CHOICES)
-    diet = models.ForeignKey(to=Diet, on_delete=models.CASCADE)
-
+    free_diet = models.ForeignKey(to=FreeDiet, on_delete=models.CASCADE, null=True, blank= True)
+    specialized_diet = models.ForeignKey(to=SpecializedDiet, on_delete=models.CASCADE, null=True, blank=True)
     # owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده قطعه رژیم')
 
     def __str__(self):

@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import VisitTime, DietTemplatePart, Diet
+from .models import VisitTime, DietTemplatePart, SpecializedDiet, FreeDiet
 
 
 class DietAdmin(admin.TabularInline):
-    model = Diet
+    model = SpecializedDiet
 
 
 class VisitTimeAdmin(admin.ModelAdmin):
@@ -30,5 +30,5 @@ class DietAdmin(admin.ModelAdmin):
     inlines = [DietTemplatePartAdmin, ]
 
 
-admin.site.register(Diet, DietAdmin)
+admin.site.register(SpecializedDiet, DietAdmin)
 admin.site.register(VisitTime, VisitTimeAdmin)
