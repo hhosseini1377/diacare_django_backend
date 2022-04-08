@@ -64,6 +64,7 @@ class Account(AbstractUser, TimeModel):
     email = models.EmailField(verbose_name="آدرس ایمیل", unique=True, db_index=True)
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = ['email', ]
+    optional_information = models.CharField(verbose_name='توضیحات اضافه', max_length=200,blank=True)
     role = models.CharField(max_length=100,
                             choices=ROLES_CHOICES,
                             default='patient', verbose_name="نوع کاربر")

@@ -19,7 +19,7 @@ class VisitTime(models.Model):
     patient = models.ForeignKey(Account, blank=True, null=True, on_delete=models.CASCADE, related_name='patient_visits',
                                 verbose_name='بیمار')
     type = models.CharField(max_length=100,
-                            choices=VISIT_CHOICES, verbose_name='نوع ویزیت')
+                            choices=VISIT_CHOICES, verbose_name='نوع ویزیت', default=DIABETES_CONTROL)
 
     def __str__(self):
         return "دکتر: " + self.doctor.__str__() + " / " + "بیمار: " + self.patient.__str__()
@@ -27,6 +27,19 @@ class VisitTime(models.Model):
     class Meta:
         verbose_name = 'ویزیت'
         verbose_name_plural = 'ویزیت‌ها'
+
+
+class Diet(models.Model):
+    name = models.CharField(max_length=50, verbose_name='نام رژیم', blank=True)
+    visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'رژیم غذایی'
+        verbose_name_plural = "رژیم‌های غذایی"
+
+    def __str__(self):
+        return "برنامه رژیم توسط دکتر " + self.visit.doctor.last_name.__str__() + " برای بیمار: " + \
+               self.visit.patient.__str__()
 
 
 class DietTemplatePart(models.Model):
@@ -61,8 +74,9 @@ class DietTemplatePart(models.Model):
     context = models.CharField(max_length=100, verbose_name='محتوا')
     meal = models.CharField(max_length=100, choices=DIET_CHOICES, verbose_name='وعده غذایی')
     week_day = models.CharField(max_length=100, verbose_name='روز هفته', choices=WEEKDAY_CHOICES)
+    diet = models.ForeignKey(to=Diet, on_delete=models.CASCADE)
 
-    owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده قطعه رژیم')
+    # owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده قطعه رژیم')
 
     def __str__(self):
         return self.week_day + "/" + self.meal + ': ' + self.context[:30]
@@ -72,29 +86,18 @@ class DietTemplatePart(models.Model):
         verbose_name_plural = 'بخش‌های تمپلیت رژیم'
 
 
-class Template(models.Model):
-    name = models.CharField(max_length=100, verbose_name='نام تمپلیت')
-    owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده تمپلیت رژیم')
-    template_parts = models.ManyToManyField(DietTemplatePart, verbose_name='بخش‌های تمپلیت')
-
-    class Meta:
-        verbose_name = 'تمپلیت رژیم'
-        verbose_name_plural = 'تمپلیت‌های رژیم'
-
-    def __str__(self):
-        return "برنامه رژیم توسط دکتر " + self.owner.__str__() + ":\n " + self.name
-
-
-class Diet(models.Model):
-    visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE)
-    template = models.ForeignKey(Template, on_delete=models.CASCADE, verbose_name='تمپلیت رژیم')
-
-    class Meta:
-        verbose_name = 'رژیم غذایی'
-        verbose_name_plural = "رژیم‌های غذایی"
-
-    def __str__(self):
-        return self.template.__str__() + " / " + self.visit.__str__()
+#
+# class Template(models.Model):
+#     name = models.CharField(max_length=100, verbose_name='نام تمپلیت')
+#     owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده تمپلیت رژیم')
+#     template_parts = models.ManyToManyField(DietTemplatePart, verbose_name='بخش‌های تمپلیت')
+#
+#     class Meta:
+#         verbose_name = 'تمپلیت رژیم'
+#         verbose_name_plural = 'تمپلیت‌های رژیم'
+#
+#     def __str__(self):
+#         return "برنامه رژیم توسط دکتر " + self.owner.__str__() + ":\n " + self.name
 
 
 class Prescription(models.Model):
@@ -102,7 +105,8 @@ class Prescription(models.Model):
     visit = models.OneToOneField(VisitTime, on_delete=models.CASCADE, verbose_name='ویزیت')
 
     def __str__(self):
-        return str('پزشک:') + str(self.visit.doctor.__str__()) + "/" + str('بیمار:') + str(self.visit.patient.__str__())
+        return str('پزشک: ') + str(self.visit.doctor.__str__()) + " / " + str('بیمار: ') + str(
+            self.visit.patient.__str__())
 
     class Meta:
         verbose_name = 'نسخه'

@@ -11,7 +11,8 @@ class AccountRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ['pk', 'avatar', 'email', 'is_staff', 'bio', 'phone', 'first_name', 'last_name', 'is_active']
+        fields = ['pk', 'avatar', 'email', 'is_staff', 'phone', 'first_name', 'last_name', 'is_active',
+                  'optional_information']
 
     def get_avatar(self, obj):
         f = open(obj.avatar.path, 'rb')

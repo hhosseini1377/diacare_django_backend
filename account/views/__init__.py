@@ -5,3 +5,4 @@ from .verify_email_view import VerifyEmail
 from .obtain_token_pair_view import CustomObtainTokenPairView
 from .change_password_view import ChangePasswordView
 from .update_account_view import UpdateProfileView
+from .show_profile_view import GetProfileView

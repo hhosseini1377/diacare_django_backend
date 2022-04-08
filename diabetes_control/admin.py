@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import VisitTime, Template, DietTemplatePart, Diet
+from .models import VisitTime, DietTemplatePart, Diet
 
 
 class DietAdmin(admin.TabularInline):
@@ -19,26 +19,16 @@ class VisitTimeAdmin(admin.ModelAdmin):
     inlines = [DietAdmin]
 
 
-class DietTemplatePartAdmin(admin.ModelAdmin):
-    pass
-
-
-class TemplateAdmin(admin.ModelAdmin):
-    fields = ['name', 'owner', 'template_parts']
-    search_fields = ['owner', 'name']
-    list_filter = ['name', 'owner', 'template_parts']
-    list_display = ['name', 'owner']
-    filter_horizontal = ['template_parts', ]
+class DietTemplatePartAdmin(admin.TabularInline):
+    model = DietTemplatePart
 
 
 class DietAdmin(admin.ModelAdmin):
     fieldsets = (
         ('ویزیت', {'fields': ['visit']}),
-        ('تمپلیت', {'fields': ['template']})
     )
+    inlines = [DietTemplatePartAdmin, ]
 
 
 admin.site.register(Diet, DietAdmin)
-admin.site.register(DietTemplatePart, DietTemplatePartAdmin)
 admin.site.register(VisitTime, VisitTimeAdmin)
-admin.site.register(Template, TemplateAdmin)
