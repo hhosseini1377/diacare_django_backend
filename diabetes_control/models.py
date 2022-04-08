@@ -3,6 +3,7 @@ from django.db import models
 from account.models import Account
 from free_diet.models import FreeDiet
 
+
 class VisitTime(models.Model):
     DIABETES_CONTROL = 'diabetes_control'
     SPECIAL_PROGRAM = 'specialized_program'

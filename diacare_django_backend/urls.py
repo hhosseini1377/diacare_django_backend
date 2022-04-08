@@ -13,4 +13,6 @@ urlpatterns = [
                   path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
                   path('api/v1/verify-email/', VerifyEmail.as_view(), name='verify-email'),
                   path('api/v1/account/', include('account.urls')),
+                  path('freediet/', include('free_diet.urls'), name='free_diet'),
+                  path('dashboard/', include('dashboard.urls'), name='dashboard')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

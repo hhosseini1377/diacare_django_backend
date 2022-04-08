@@ -1,3 +1,32 @@
-from django.shortcuts import render
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import FreeDiet
+from diabetes_control.models import DietTemplatePart
+from rest_framework import status
 # Create your views here.
+
+
+class FreeDietView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            kind, period, weight, height = request.data['kind'], request.data['period'], request.data['weight'], request.data['height']
+        except Exception as e:
+            return Response({'message': 'موارد کامل وارد نشده است'}, status=status.HTTP_400_BAD_REQUEST)
+        suggested_free_diet = FreeDiet.objects.filter(free_diet_kind=kind, diet_period=period)[0]
+        diet_templates = DietTemplatePart.objects.filter(free_diet=suggested_free_diet).order_by('week_day')
+        diet_part_response = {}
+        i = 0
+        for diet_template in diet_templates:
+            template = {'وعده': diet_template.meal, 'روز': diet_template.week_day, 'محتوا': diet_template.context}
+            diet_part_response[i] = template
+            i += 1
+
+        response = {'نام رژیم': suggested_free_diet.name, 'محتوی رژیم': diet_part_response}
+        return Response(response)
+
+
+
+
