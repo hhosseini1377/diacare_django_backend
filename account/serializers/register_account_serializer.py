@@ -58,3 +58,8 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
         token['email'] = user.email
         token['phone'] = user.phone
         token['role'] = user.role
+
+    def to_representation(self, instance):
+        ret = super(AccountRegistrationSerializer, self).to_representation(instance)
+        ret['resp'] = "ایمیل تاییدیه ارسال شد. لطفا برای اهراز هویت بر لینک ارساری در ایمیل کلیک کنید."
+        return ret
