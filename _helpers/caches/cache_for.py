@@ -11,12 +11,12 @@ def cache_get_key(*args, **kwargs) -> str:
     for arg in args:
         serialise.append(str(arg))
     sorted_kwargs = OrderedDict(sorted(kwargs.items()))
-    print(args)
-    print(sorted_kwargs)
+    # print(args)
+    # print(sorted_kwargs)
     for key, arg in sorted_kwargs.items():
         serialise.append(str(key))
         serialise.append(str(arg))
-    print(serialise)
+    # print(serialise)
     key = hashlib.md5("".join(serialise).encode('utf-8')).hexdigest()
     return key
 
