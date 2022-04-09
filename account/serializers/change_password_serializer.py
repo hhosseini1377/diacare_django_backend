@@ -30,4 +30,11 @@ class ChangePasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
         instance.set_password(validated_data['new_password'])
         instance.save()
-        return "password has been updated"
+
+        return instance
+
+    def to_representation(self, instance):
+        ret = super(ChangePasswordSerializer, self).to_representation(instance)
+        ret['response'] = "رمزعبور تغییر کرد"
+        ret['user'] = getattr(instance, 'email')
+        return ret

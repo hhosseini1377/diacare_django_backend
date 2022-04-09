@@ -1,5 +1,5 @@
-from datetime import datetime
 
+from django.utils import timezone
 from django.db import models
 from django.db.models import Manager
 
@@ -7,12 +7,12 @@ from django.db.models import Manager
 class TimeModelManager(Manager):
     def update(self, **kwargs):
         if 'modified' not in kwargs:
-            kwargs['modified'] = datetime.now()
+            kwargs['modified'] = timezone.now()
         return super().update(**kwargs)
 
     def bulk_create(self, objs, batch_size=None):
         for obj in objs:
-            obj.modified = datetime.now()
+            obj.modified = timezone.now()
         return super().bulk_create(objs, batch_size)
 
 

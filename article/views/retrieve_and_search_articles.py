@@ -10,11 +10,9 @@ from article.serializers import GetArticleSerializer
 
 
 class ListAndSearchArticles(ListAPIView):
-    permission_classes = []
-    authentication_classes = ()
+    permission_classes = ()
     serializer_class = GetArticleSerializer
     pagination_class = LimitOffsetPagination
-
     list_params_template = [
         _p('tags', _p.list()),
         _p('subject', _p.string)
