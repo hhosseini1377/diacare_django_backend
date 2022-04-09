@@ -1,6 +1,5 @@
 import logging
-from datetime import datetime
-
+from django.utils import timezone
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 
@@ -24,9 +23,8 @@ class GetLandingPageInformation(RetrieveAPIView):
     def _get_counts():
         patients_num = Account.objects.filter(role=Account.PATIENT).count()
         experts_num = Account.objects.filter(role=Account.EXPERT).count()
-        done_visits_num = VisitTime.objects.filter(start_date__lte=datetime.now()).count()
+        done_visits_num = VisitTime.objects.filter(start_date__lte=timezone.now()).count()
         return {'patients_count': patients_num, 'experts_count': experts_num, 'done_visits_count': done_visits_num}
 
     def get_queryset(self):
-        print(self.kwargs)
         return Account.objects.all()

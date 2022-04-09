@@ -31,7 +31,6 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        print(validated_data['password'])
         user = User.objects.create(
             phone=validated_data['phone'],
             email=validated_data['email'],
