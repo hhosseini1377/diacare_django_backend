@@ -8,11 +8,11 @@ from datetime import timedelta, datetime
 from diabetes_control.serializers import DoctorVisitTimeSerializer
 
 
-class DoctorAheadVisits(APIView):
+class DoctorVisits(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        print(request.user)
-        visits = VisitTime.objects.filter(doctor=request.user, start_date__gt=datetime.now()).order_by('start_date')
+
+        visits = VisitTime.objects.filter(doctor=request.user).order_by('start_date')
         ahead_visit_times_serializer = DoctorVisitTimeSerializer(visits, many=True)
         return Response(ahead_visit_times_serializer.data)
