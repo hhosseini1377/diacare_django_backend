@@ -17,4 +17,5 @@ class AccountUpdateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
+        instance.avatar = validated_data['avatar']
         return super(AccountUpdateSerializer, self).update(instance, validated_data)

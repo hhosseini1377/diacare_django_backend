@@ -13,10 +13,7 @@ class Logout(APIView):
 
     def post(self, request, format=None):
         try:
-            print('inja')
             refresh_token = request.data["refresh"]
-            print(refresh_token)
-            print('here')
             token = RefreshToken(refresh_token)
             token.blacklist()
             logout(request)

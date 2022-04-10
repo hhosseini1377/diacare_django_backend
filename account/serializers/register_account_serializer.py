@@ -18,6 +18,7 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
     )
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
+    role = serializers.CharField(required=True)
 
     class Meta:
         model = User
@@ -30,7 +31,6 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        print(validated_data['password'])
         user = User.objects.create(
             phone=validated_data['phone'],
             email=validated_data['email'],
@@ -58,3 +58,8 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
         token['email'] = user.email
         token['phone'] = user.phone
         token['role'] = user.role
+
+    def to_representation(self, instance):
+        ret = super(AccountRegistrationSerializer, self).to_representation(instance)
+        ret['resp'] = "ایمیل تاییدیه ارسال شد. لطفا برای اهراز هویت بر لینک ارساری در ایمیل کلیک کنید."
+        return ret

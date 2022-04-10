@@ -2,8 +2,9 @@ from django.urls import path
 
 from account.views import (
     Login, Logout, does_account_exist_view, RegisterView, ChangePasswordView,
-    UpdateProfileView, GetProfileView
+    UpdateProfileView, GetProfileView,
 )
+
 app_name = 'account'
 
 urlpatterns = [

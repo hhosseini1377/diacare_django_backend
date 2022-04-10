@@ -22,7 +22,7 @@ class Article(models.Model):
     subject = models.CharField(max_length=100, verbose_name='subject', blank=False, null=False)
     context = models.CharField(max_length=10000, verbose_name='context', blank=False, null=False)
     writer = models.ForeignKey(Account, on_delete=models.CASCADE)
-    thumbnail = models.ImageField(default='images/default.png')
+    thumbnail = models.ImageField(default='default_avatar.png')
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):

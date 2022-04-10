@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from rest_framework.serializers import ModelSerializer
 import rest_framework.serializers as serializers
-from .models import VisitTime
+from diabetes_control.models import VisitTime
 
 
 class DoctorVisitTimeSerializer(ModelSerializer):
