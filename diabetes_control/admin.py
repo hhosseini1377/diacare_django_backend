@@ -1,32 +1,38 @@
 from django.contrib import admin
 
-from .models import VisitTime, DietTemplatePart, SpecializedDiet
-
-
-class DietAdmin(admin.TabularInline):
-    model = SpecializedDiet
+from .models import VisitTime, DietTemplatePart, SpecializedDiet, Prescription
 
 
 class VisitTimeAdmin(admin.ModelAdmin):
-    list_display = ['doctor', 'patient', 'type', 'id']
+    list_display = ['doctor', 'patient', 'type']
     fieldsets = (
         (None, {'fields': ['start_date', 'end_date', 'type']}),
         ('پزشک معالح', {'fields': ['doctor', ]}),
         ('بیمار', {'fields': ['patient', ]})
     )
-    list_filter = ['type', 'start_date', 'end_date', 'doctor', 'patient', 'type', 'id']
+    list_filter = ['type', 'start_date', 'end_date', 'doctor', 'patient', 'type']
     search_fields = ['patient', 'doctor']
-    inlines = [DietAdmin]
 
 
-class DietTemplatePartAdmin(admin.ModelAdmin    ):
+class DietTemplatePartAdmin(admin.TabularInline):
     model = DietTemplatePart
 
 
 class DietAdmin(admin.ModelAdmin):
-    model = SpecializedDiet
+    fieldsets = (
+        ('نام', {'fields': ['name']}),
+        ('ویزیت', {'fields': ['visit']}),
+    )
+    inlines = [DietTemplatePartAdmin, ]
 
 
+class PrescriptionAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('محتوا', {'fields': ['context']}),
+        ('ویزیت', {'fields': ['visit']}),
+    )
+
+
+admin.site.register(Prescription, PrescriptionAdmin)
 admin.site.register(SpecializedDiet, DietAdmin)
 admin.site.register(VisitTime, VisitTimeAdmin)
-admin.site.register(DietTemplatePart, DietTemplatePartAdmin)
