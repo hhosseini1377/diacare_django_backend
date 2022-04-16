@@ -240,6 +240,8 @@ ENV/
 # mypy
 .mypy_cache/
 
+static/
+
 .DS_Store
 *.sqlite3
 media/
