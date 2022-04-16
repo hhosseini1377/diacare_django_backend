@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import FreeDiet, FreeDietTemplatePart
+
+from .models import FreeDiet, FreeDietTemplatePart, FreeDietInstance
+
+
 # Register your models here.
 
 class DietTemplatePartAdmin(admin.TabularInline):
@@ -14,4 +17,9 @@ class FreeDietAdmin(admin.ModelAdmin):
     inlines = [DietTemplatePartAdmin, ]
 
 
+class FreeDietInstanceAdmin(admin.ModelAdmin):
+    model = FreeDietInstance
+
+
 admin.site.register(FreeDiet, FreeDietAdmin)
+admin.site.register(FreeDietInstance, FreeDietInstanceAdmin)
