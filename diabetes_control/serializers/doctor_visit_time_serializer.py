@@ -10,7 +10,6 @@ class DoctorVisitTimeSerializer(ModelSerializer):
     patient_last_name = serializers.CharField(source='patient.last_name')
     is_passed = serializers.SerializerMethodField('is_visit_passed')
 
-    # @staticmethod
     def is_visit_passed(self, obj):
         if obj.start_date > timezone.now():
             return False

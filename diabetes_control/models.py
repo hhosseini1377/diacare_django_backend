@@ -75,7 +75,6 @@ class DietTemplatePart(models.Model):
     context = models.CharField(max_length=100, verbose_name='محتوا')
     meal = models.CharField(max_length=100, choices=DIET_CHOICES, verbose_name='وعده غذایی')
     week_day = models.CharField(max_length=100, verbose_name='روز هفته', choices=WEEKDAY_CHOICES)
-    free_diet = models.ForeignKey(to=FreeDiet, on_delete=models.CASCADE, null=True, blank= True)
     specialized_diet = models.ForeignKey(to=SpecializedDiet, on_delete=models.CASCADE, null=True, blank=True)
     # owner = models.ForeignKey(to=Account, on_delete=models.CASCADE, verbose_name='سازنده قطعه رژیم')
 

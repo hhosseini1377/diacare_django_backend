@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import FreeDiet
 from diabetes_control.models import DietTemplatePart
+from .models import FreeDietTemplatePart
 from rest_framework import status
 from _helpers.custom_permisions import IsDoctor, IsPatient
 # Create your views here.
@@ -22,7 +23,7 @@ class FreeDietView(APIView):
         except Exception as e:
             return Response({'message': 'رژیمی با اطلاعات وارد شده وجود ندارد'}, status=status.HTTP_400_BAD_REQUEST)
 
-        diet_templates = DietTemplatePart.objects.filter(free_diet=suggested_free_diet).order_by('week_day')
+        diet_templates = FreeDietTemplatePart.objects.filter(free_diet=suggested_free_diet).order_by('week_day')
         diet_part_response = []
 
         for diet_template in diet_templates:
