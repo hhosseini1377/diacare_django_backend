@@ -25,6 +25,9 @@ class FreeDiet(models.Model):
     free_diet_kind = models.CharField(max_length=100, verbose_name='نوع رژیم', choices=FREEDIET_CHOICES, default=WEIGHTLOSS)
     diet_period = models.CharField(max_length=100, verbose_name='مدت رژیم', choices=PERIOD_CHOICES, default=ONEMONTH)
 
+    def __str__(self):
+        return self.name
+
 
 class FreeDietTemplatePart(models.Model):
     SATURDAY = 'saturday'
@@ -59,4 +62,7 @@ class FreeDietTemplatePart(models.Model):
     meal = models.CharField(max_length=100, choices=DIET_CHOICES, verbose_name='وعده غذایی')
     week_day = models.CharField(max_length=100, verbose_name='روز هفته', choices=WEEKDAY_CHOICES)
     free_diet = models.ForeignKey(to=FreeDiet, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.free_diet.name + self.meal + self.week_day
 
