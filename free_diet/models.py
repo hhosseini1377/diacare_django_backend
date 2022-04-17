@@ -36,6 +36,11 @@ class FreeDiet(models.Model):
 class FreeDietInstance(models.Model):
     account = models.ForeignKey(to=Account, related_name='free_diets', on_delete=models.CASCADE)
     free_diet = models.ForeignKey(to=FreeDiet, related_name='instances', on_delete=models.CASCADE)
+    started_at = models.DateField(
+        auto_now_add=True,
+        db_index=True,
+        verbose_name="زمان ساخت"
+    )
 
     class Meta:
         verbose_name = 'نمونه رژیم رایگان غذایی'

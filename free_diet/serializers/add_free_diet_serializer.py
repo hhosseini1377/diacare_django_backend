@@ -8,15 +8,6 @@ class AddFreeDietSerializer(serializers.ModelSerializer):
         model = FreeDietInstance
         fields = ['free_diet']
 
-    # def validate(self, attrs):
-    #     print(attrs)
-    #     print(type(attrs['free_diet']))
-    #     try:
-    #         FreeDiet.objects.get(pk=attrs['free_diet'])
-    #     except serializers.ValidationError:
-    #         raise serializers.ValidationError({"free_diet": "رزیمی با اطالاعت داده شده موجود نیست"})
-    #     return attrs
-
     def create(self, validated_data):
         instance = FreeDietInstance.objects.create(
             free_diet=validated_data['free_diet'],
