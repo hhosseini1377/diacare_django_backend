@@ -48,3 +48,12 @@ class PatientVisitTimeSerializer(ModelSerializer):
         model = VisitTime
         fields = ['id', 'start_date', 'end_date', 'doctor_first_name', 'doctor_last_name', 'prescription',
                   'specialized_diet']
+
+
+class PatientFutureVisitTimeSerializer(ModelSerializer):
+    doctor_first_name = serializers.CharField(source='doctor.first_name')
+    doctor_last_name = serializers.CharField(source='doctor.last_name')
+
+    class Meta:
+        model = VisitTime
+        fields = ['id', 'start_date', 'end_date', 'doctor_first_name', 'doctor_last_name']
