@@ -8,14 +8,10 @@ from django.utils.timezone import utc
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('free_diet', '0005_alter_freediet_options_and_more'),
+        ('free_diet', '0006_remove_freediet_accounts'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='freediet',
-            name='accounts',
-        ),
         migrations.AddField(
             model_name='freedietinstance',
             name='started_at',
