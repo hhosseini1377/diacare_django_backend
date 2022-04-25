@@ -22,7 +22,7 @@ class FreeDiet(models.Model):
 
     name = models.CharField(max_length=50, verbose_name='نام رژیم', blank=True)
     free_diet_kind = models.CharField(max_length=100, verbose_name='نوع رژیم', choices=FREEDIET_CHOICES,
-                                      default=WEIGHTLOSS)
+                                       default=WEIGHTLOSS)
     diet_period = models.CharField(max_length=100, verbose_name='مدت رژیم', choices=PERIOD_CHOICES, default=ONEMONTH)
 
     class Meta:
