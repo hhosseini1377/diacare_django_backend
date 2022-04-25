@@ -1,2 +1,5 @@
 from .patient_visits_history import PatientRetrieveVisitHistory
 from .retrieve_full_visit import PatientFullRetrieveVisit
+from .patient_future_visits_view import PatientRetrieveFutureVisit
+from .retrieve_free_diets_patient import RetrieveListFreeDiets
+from .get_free_diet_view import GetFreeDietView
