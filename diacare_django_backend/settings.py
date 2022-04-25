@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
-    # 'corsheaders',
+    'corsheaders',
 
     # apps
     'simple_history',
@@ -63,11 +63,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     # non-default middlewares
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'diacare_django_backend.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    '*',
+]
 
 TEMPLATES = [
     {
@@ -222,7 +229,7 @@ MEDIA_URL = '/media/'
 
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', True)
 EMAIL_HOST = config('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = config('EMAIL_PORT', 587)      
+EMAIL_PORT = config('EMAIL_PORT', 587)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
