@@ -32,12 +32,11 @@ ALLOWED_HOSTS = [
     'localhost:8000'
 ]
 
-CORS_ALLOW_ALL_ORIGINS: True
-
 # Application definition
 
 
 INSTALLED_APPS = [
+    'corsheaders',
     'postgres_metrics.apps.PostgresMetrics',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,7 +47,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
-    'corsheaders',
 
     # apps
     'simple_history',
@@ -58,10 +56,10 @@ INSTALLED_APPS = [
     'free_diet',
 ]
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -70,9 +68,9 @@ MIDDLEWARE = [
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 ROOT_URLCONF = 'diacare_django_backend.urls'
-
-
 
 TEMPLATES = [
     {
