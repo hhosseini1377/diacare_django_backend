@@ -51,8 +51,8 @@ class PatientVisitTimeSerializer(ModelSerializer):
 
 
 class DoctorVisitTimeSerializer(ModelSerializer):
-    doctor_first_name = serializers.CharField(source='patient.first_name')
-    doctor_last_name = serializers.CharField(source='patient.last_name')
+    patient_first_name = serializers.CharField(source='patient.first_name')
+    patient_last_name = serializers.CharField(source='patient.last_name')
     prescription = PrescriptionSerializer(read_only=True)
     specialized_diet = SpecializedDietSerializer(source='specializeddiet')
 
