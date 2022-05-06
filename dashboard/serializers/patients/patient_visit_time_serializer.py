@@ -50,6 +50,17 @@ class PatientVisitTimeSerializer(ModelSerializer):
                   'specialized_diet']
 
 
+class DoctorVisitTimeSerializer(ModelSerializer):
+    doctor_first_name = serializers.CharField(source='patient.first_name')
+    doctor_last_name = serializers.CharField(source='patient.last_name')
+    prescription = PrescriptionSerializer(read_only=True)
+    specialized_diet = SpecializedDietSerializer(source='specializeddiet')
+
+    class Meta:
+        model = VisitTime
+        fields = ['id', 'start_date', 'end_date', 'doctor_first_name', 'doctor_last_name', 'prescription',
+                  'specialized_diet']
+
 class PatientFutureVisitTimeSerializer(ModelSerializer):
     doctor_first_name = serializers.CharField(source='doctor.first_name')
     doctor_last_name = serializers.CharField(source='doctor.last_name')

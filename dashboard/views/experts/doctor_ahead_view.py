@@ -13,6 +13,4 @@ class DoctorVisits(APIView):
     def get(self, request):
         visits = VisitTime.objects.filter(doctor=request.user).order_by('start_date')
         ahead_visit_times_serializer = DoctorVisitTimeSerializer(visits, many=True)
-        if ahead_visit_times_serializer.is_valid():
-            return Response(ahead_visit_times_serializer.data, status=status.HTTP_200_OK)
-        return Response(ahead_visit_times_serializer.errors, status=status.HTTP_403_FORBIDDEN)
+        return Response(ahead_visit_times_serializer.data, status=status.HTTP_200_OK)

@@ -1,3 +1,3 @@
 from .patient_visit_time_serializer import PatientHistoryVisitTimeSerializer, PatientVisitTimeSerializer, \
-    PatientFutureVisitTimeSerializer
+    PatientFutureVisitTimeSerializer, DoctorVisitTimeSerializer
 from .free_diet_instance_serializer import FreeDietInstanceAbstractSerializer, FreeDietInstanceSerializer
