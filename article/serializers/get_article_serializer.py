@@ -21,8 +21,8 @@ class GetArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['thumbnail', 'subject', 'context', 'writer', 'tags']
-        read_only_fields = ['subject', 'context', ]
+        fields = ['id','thumbnail', 'subject', 'context', 'writer', 'tags']
+        read_only_fields = ['subject', 'context', 'id']
         extra_fields = ['thumbnail', 'tags', 'writer']
 
     def get_writer(self, obj):
