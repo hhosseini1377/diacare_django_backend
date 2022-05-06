@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views.experts import DoctorVisits, DoctorFullRetrieveVisit, AddArticle
+from .views.experts import DoctorVisits, DoctorFullRetrieveVisit, AddArticle, AddNewReserveTime
 from .views.patients import PatientRetrieveVisitHistory, PatientFullRetrieveVisit, PatientRetrieveFutureVisit, \
     RetrieveListFreeDiets, GetFreeDietView
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('doctor/visits/<int:pk>/', DoctorFullRetrieveVisit.as_view(), name='dashborad-retrieve-visit-doctor'),
     path('patient/free_diets/', RetrieveListFreeDiets.as_view(), name='dashboard-retrieve-free-diets-patient'),
     path('patient/free_diets/<int:pk>', GetFreeDietView.as_view(), name='dashborad-get-free-diet-patient'),
-    path('doctor/addarticle/', AddArticle.as_view(), name='dashborad-add-article')
+    path('doctor/addarticle/', AddArticle.as_view(), name='dashborad-add-article'),
+    path('doctor/addreservetime/', AddNewReserveTime.as_view(), name='dashborad-add-reserve-time'),
 
 ]
