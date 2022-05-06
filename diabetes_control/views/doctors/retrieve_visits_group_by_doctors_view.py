@@ -1,9 +1,10 @@
 from typing import Optional
-
+from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.db.models import F
 from django.db.models import Q
+from django.utils.timezone import datetime
 from django_plus.api import UrlParam as _p
 from rest_framework.generics import GenericAPIView
 from rest_framework.pagination import LimitOffsetPagination
@@ -53,6 +54,9 @@ class ListAvailableVisitsReturnPerDoctorsView(GenericAPIView):
         name = _p.clean_data(self.request.query_params, self.list_params_template)['name']
         if date:
             _q |= Q(start_date__startswith=date)
+        else:
+            _q |= Q(start_date__gt=datetime.now(), start_date__lt=datetime.now() + timedelta(days=3))
         if name:
             _q |= Q(doctor__last_name__icontains=name)
+        _q &= Q(patient__isnull=True)
         return VisitTime.objects.filter(_q)
