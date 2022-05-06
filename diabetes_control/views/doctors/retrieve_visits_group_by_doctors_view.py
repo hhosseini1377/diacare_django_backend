@@ -55,7 +55,7 @@ class ListAvailableVisitsReturnPerDoctorsView(GenericAPIView):
         if date:
             _q |= Q(start_date__startswith=date)
         else:
-            _q |= Q(start_date__gt=datetime.now(), start_date__lt=datetime.now() + timedelta(days=3))
+            _q |= Q(start_date__gt=datetime.now(), start_date__lt=datetime.now() + timedelta(days=1))
         if name:
             _q |= Q(doctor__last_name__icontains=name)
         _q &= Q(patient__isnull=True)
