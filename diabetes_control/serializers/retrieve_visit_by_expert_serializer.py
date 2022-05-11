@@ -4,8 +4,8 @@ from diabetes_control.models import VisitTime
 
 
 class GetAvailableVisits(serializers.ModelSerializer):
-    start_date = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H:%M:%S")
-    end_date = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H:%M:%S")
+    start_date = serializers.DateTimeField(read_only=True)
+    end_date = serializers.DateTimeField(read_only=True)
     doctor = serializers.CharField()
 
     class Meta:
