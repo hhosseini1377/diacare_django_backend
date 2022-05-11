@@ -1,7 +1,9 @@
 from django.urls import path
 
-from diabetes_control.views import AddPatientToVisitView
-from diabetes_control.views.doctors import ListAvailableVisitsReturnPerDoctorsView, ListAvailableVisitsPerDateTimeView
+from diabetes_control.views import AddPatientToVisitView, AddSpecializedDietToVisitView
+from diabetes_control.views.doctors import (
+    ListAvailableVisitsReturnPerDoctorsView, ListAvailableVisitsPerDateTimeView,
+)
 
 app_name = 'diabetes_control'
 
@@ -10,5 +12,6 @@ urlpatterns = [
          name="retrieve-visits-group-by-doctors"),
     path('visits/available/retrieve/', ListAvailableVisitsPerDateTimeView.as_view(),
          name="retrieve-visits-per-time-fixed-doctor"),
-    path('visits/add_patient/<int:pk>', AddPatientToVisitView.as_view(), name='add-patient-to-visit')
+    path('visits/add_patient/<int:pk>', AddPatientToVisitView.as_view(), name='add-patient-to-visit'),
+    path('visits/add_diet/', AddSpecializedDietToVisitView.as_view(), name='add-diet-to-visit')
 ]

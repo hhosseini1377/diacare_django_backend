@@ -22,7 +22,7 @@ class ListAvailableVisitsPerDateTimeView(ListAPIView):
     def get_queryset(self):
         doctor_id = self.request.POST.get('doctor_id', None)
         date = parse_date(self.request.POST.get('date', None))
-        return VisitTime.objects.filter(doctor=doctor_id, doctor__role=Account.EXPERT,
+        return VisitTime.objects.filter(doctor=doctor_id,
                                         start_date__date=date, patient__isnull=True)
 
     def post(self, request, *args, **kwargs):

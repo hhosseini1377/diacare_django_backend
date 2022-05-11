@@ -4,13 +4,13 @@ from .models import VisitTime, DietTemplatePart, SpecializedDiet, Prescription
 
 
 class VisitTimeAdmin(admin.ModelAdmin):
-    list_display = ['doctor', 'patient', 'type']
+    list_display = ['doctor', 'patient', 'type', 'id']
     fieldsets = (
         (None, {'fields': ['start_date', 'end_date', 'type']}),
         ('پزشک معالح', {'fields': ['doctor', ]}),
         ('بیمار', {'fields': ['patient', ]})
     )
-    list_filter = ['type', 'start_date', 'end_date', 'doctor', 'patient', 'type']
+    list_filter = ['type', 'start_date', 'end_date', 'doctor', 'patient', 'type', 'id']
     search_fields = ['patient', 'doctor']
 
 
@@ -28,7 +28,7 @@ class DietAdmin(admin.ModelAdmin):
 
 class PrescriptionAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('محتوا', {'fields': ['context']}),
+        ('محتوا', {'fields': ['context', 'pk']}),
         ('ویزیت', {'fields': ['visit']}),
     )
 

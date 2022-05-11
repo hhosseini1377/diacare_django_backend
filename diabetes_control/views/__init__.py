@@ -1,1 +1,2 @@
 from .add_patient_to_visit_view import AddPatientToVisitView
+from .add_specialized_diet_to_visit import AddSpecializedDietToVisitView
