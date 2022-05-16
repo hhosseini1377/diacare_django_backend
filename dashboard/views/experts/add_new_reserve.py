@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 from rest_framework import status
@@ -7,6 +8,8 @@ from rest_framework.views import APIView
 from _helpers.custom_permisions import IsDoctor
 from diabetes_control.models import VisitTime
 
+logger = logging.getLogger(__name__)
+
 
 class AddNewReserveTime(APIView):
     permission_classes = [IsDoctor, ]
@@ -15,7 +18,7 @@ class AddNewReserveTime(APIView):
         format = "%Y-%m-%dT%H:%M:%S%z"
         start_date = datetime.strptime(request.data['start_date'], format)
         end_date = datetime.strptime(request.data['end_date'], format)
-        count = request.data['count']
+        count = int(request.data['count'])
         chunk = (end_date - start_date) / count
         visittime_objects = []
         visits = []
@@ -29,4 +32,5 @@ class AddNewReserveTime(APIView):
 
             return Response({'message': 'زمان رزرو اضافه شد'}, status=status.HTTP_200_OK)
         except Exception as e:
+            logger.info(msg=e)
             return Response({'message': 'شما قادر به انجام این کار نیستید'}, status=status.HTTP_400_BAD_REQUEST)
